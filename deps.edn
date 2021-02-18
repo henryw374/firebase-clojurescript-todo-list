@@ -7,6 +7,6 @@
          nrepl/nrepl               {:mvn/version "0.6.0"}
 
          ;cljs libraries
-         cljs-bean                 {:mvn/version "1.5.0"}
-         reagent                   {:mvn/version "0.8.1"}
-         re-frame                  {:mvn/version "0.10.9"}}}
+         cljs-bean/cljs-bean                 {:mvn/version "1.5.0"}
+         reagent/reagent                   {:mvn/version "0.8.1"}
+         re-frame/re-frame                  {:mvn/version "0.10.9"}}}
