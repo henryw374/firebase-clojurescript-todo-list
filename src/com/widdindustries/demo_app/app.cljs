@@ -13,4 +13,15 @@
   (js/console.log "Initializing")
   (mount-components))
 
+(defn ^:after-load on-figwheel-reload []
+  (.clear js/console)
+  ;(re-frame.core/clear-subscription-cache!)
+  (mount-components))
+
+(.addEventListener
+  js/window
+  "load"
+  (fn []
+    (init!)))
+
 

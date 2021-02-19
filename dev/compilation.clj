@@ -24,7 +24,7 @@
     (->
       {:optimizations :advanced
        :infer-externs true
-       :main          'com.widdindustries.demo-app.app-prod
+       :main          'com.widdindustries.demo-app.app
        :process-shim  false
        :output-dir    "prod-target"
        :output-to     "firebase/public/cljs-out/main.js"}
@@ -34,7 +34,7 @@
 (defn start-live-compilation []
   (figwheel/start {:mode :serve}
     {:id      "dev"
-     :options {:main 'com.widdindustries.demo-app.app-dev
+     :options {:main 'com.widdindustries.demo-app.app
                :output-to    "firebase/public/cljs-out/main.js"
                :output-dir   "firebase/public/cljs-out"
                :repl-verbose false}

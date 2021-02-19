@@ -1,65 +1,69 @@
-# Clojurescript Firebase Demo
+# Clojurescript Firebase CRUD Demo
 
 This demo app/tutorial aims to show that creating a Firebase app with Clojurescript doesn't
 need any wrapper libraries. 
 
-It also shows that Re-Frame apps don't need to put persistent state in the app-db (aka 'big atom').
+It also shows that [Re-Frame](https://github.com/day8/re-frame) apps don't need to put persistent state in the app-db (aka 'big atom').
 
 ## Usage
 
 ### Firebase setup
 
-First, follow [the Firebase docs](https://firebase.google.com/docs/web/setup) to create your own app.
+We start by following [the Firebase docs](https://firebase.google.com/docs/web/setup) to create your own app.
 
- For this demo, enable:
+For this demo, enable:
 
 * Google authentication
-* Realtime database (test rules fine for now)
+* Realtime database (choosing 'test rules' is fine for now)
 
 In this repo, the 'firebase' dir contains a basic web page and is where Firebase CLI commands should 
 be executed from.
 
-* cd into 'firebase' dir
+* cd into the 'firebase' dir
 * install firebase CLI globally `npm -i firebase -g`
 * `firebase init`
-* choose Hosting
-* accept 'public' for hosting
+* choose 'Hosting'
+* accept 'public' for hosting dir
 * don't overwrite index.html, don't configure as one-page app
 * `firebase emulators:start`
 * visit http://localhost:5000
 
-The page you are viewing, `firebase/public/index.html` just includes some firebase sdks and initializes your app with firebase 
+The page you are viewing, `firebase/public/index.html` just includes some firebase sdks and initializes your app with 
+the firebase backend 
    
-The file `firebase/public/index.html`  has the following in its `<body>`:
+Notice this file has the following in its `<body>`:
 
 ```html
   <div id="app" style="min-height:100%"></div>
   <script src="/cljs-out/main.js" type="text/javascript"></script>
 ```
-The 'app' div is where the Clojurescript with render to and the script tag will load the 
-compiled clojurescript.
+* The 'app' div is where the Clojurescript with render to
+* The script tag will load the compiled clojurescript.
 
 ### Include Clojurescript
 
-Still with firebase emulator running, from another terminal, Run a clojure REPL from the top-level dir. 
+Still with firebase emulator running, and from another terminal, run a clojure REPL from the top-level dir. 
 This could be as simple as running `clj`,
 but to get the most out of Clojure, you should be able to send commands to a REPL from
 your editor. See [Practicalli](http://practicalli.github.io/clojure/clojure-editors/) for 
 straightforward guides for many popular editors. 
 
-In the REPL, type `(dev)` and then open the file `dev/compilation.clj` in your editor.
-
-Go down to the bottom of the `dev/compilation.clj` where there is a `(comment ..)` block - here are 
-the commands you will use to control Clojurescript compilation. Live compilation is already running,
-so try sending `(cljs-repl)` to the REPL. That drops you into a REPL using the browser environment.
+In the REPL, type `(dev)`, this will start Clojurescript live compilation.
 
 If you refresh your web page, you should see the todo list app and can start using it.
+
+Open the file `dev/compilation.clj` in your editor. At the bottom there is a `(comment ..)` block - here are 
+the commands you can send to the REPL to control Clojurescript compilation. Live compilation is already running,
+so try sending `(cljs-repl)` to the REPL. That drops you into a REPL using the browser environment.
+
+Once in the browser REPL, open up `dev/dev/browser-scratch.cljs` to see commands you might want to 
+send to effect changes in your app & etc
 
 ### Deploy to the web
 
 Before deploying, you should do a production build of the clojurescript. If you're in a browser
 repl, exit out with `:cljs/quit`. Once back in the main repl, send `(prod-build)` to the repl,
-this compiles all of your clojurescript into a single file.
+this compiles all of your clojurescript into one minified file.
 
 When that completes, refresh your web page locally to see that it still works with the prod-build code.
 
@@ -67,5 +71,24 @@ When ready, run `firebase deploy` from the firebase dir.
 
 That's it!
 
+### Some points to note
 
+I am not going to explain the code too much as there is not much of it and there are great docs for both Re-Frame/Clojurescript
+and Firebase already. All this project is doing is putting the two together! Use the Firebase console
+and the browser REPL to inspect the data model.
+
+But... 
+
+* No NPM? In this app, the firebase APIs are served by Firebase servers, and the React library has been
+pre-bundled as part of a Clojurescript library. If we needed more libraries from NPM, I would probably
+switch to the [Shadow](https://shadow-cljs.github.io/docs/UsersGuide.html) build tool to compile 
+Clojurescript. That adds a little complexity, but is worth it if more is needed from NPM.
+
+* There is no Clojurescript-Firebase wrapper library required. The namespaces `firbase.auth` and 
+`firebase.database` contain functions that call just the Firebase API functions that are needed for this app
+and should look familiar if you've read some 'Getting Started' bits in the Firebase docs.
+
+* The app never uses the Re-Frame 'app-db', which might be a surprise as it features quite large in 
+explanations of Re-Frame. The app-db has its uses, but containing data from the Firebase database would not
+be one of them and is not required for our Re-Frame subscriptions.
 

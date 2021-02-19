@@ -19,7 +19,7 @@
   {:on-success [::firebase-success]
    :on-failure [::firebase-error]})
 
-(defn success-failure-wrapper [args]
+(defn success-failure-dispatch [args]
   (let [{:keys [on-success on-failure]} (merge default-pass-fail args)]
     (fn [err]
       (rf/dispatch
@@ -37,7 +37,7 @@
 (defn- ref-set [{:keys [path value] :as args}]
   (.set (database-ref path)
     (->js value)
-    (success-failure-wrapper args)))
+    (success-failure-dispatch args)))
 
 (defn get-push-key [path]
   (let [push-key (-> (database-ref path)
@@ -56,11 +56,13 @@
   (fn [_ [_ args]]
     {::push-fx args}))
 
-(defn on-value-reaction [{:keys [path] :as args}]
+(defn on-value-reaction 
+  "returns a reagent atom that will always have the latest value at 'path' in the Firebase database"
+  [{:keys [path] :as args}]
   (let [ref (database-ref path)
         reaction (r/atom nil)
         callback (fn [^js x] (reset! reaction (some-> x (.val) ->clj)))]
-    (.on ref "value" callback (success-failure-wrapper args))
+    (.on ref "value" callback (success-failure-dispatch args))
     (ratom/make-reaction
       (fn [] @reaction)
       :on-dispose #(do (.off ref "value" callback)))))
