@@ -3,6 +3,11 @@
 This demo app/tutorial aims to show that creating a Firebase app with Clojurescript doesn't
 need any wrapper libraries. 
 
+It has been written with the docs and APIs from Firebase 8.2.7 - but Firebase version move pretty quickly
+so that won't remain the latest for long. Still, the main point here is that not much code is required to 
+join up Firebase in a Clojurescript app, not that this code is some major entity in its own right that you 
+need to start from.
+
 It also shows that [Re-Frame](https://github.com/day8/re-frame) apps don't need to put persistent state in the app-db (aka 'big atom').
 
 ## Usage
