@@ -29,7 +29,7 @@ In this repo, the 'firebase' dir contains a basic web page and is where Firebase
 be executed from.
 
 * cd into the 'firebase' dir
-* install firebase CLI globally `npm -i firebase -g`
+* install firebase CLI globally `npm install -g firebase-tools`
 * `firebase init`
 * choose 'Hosting'
 * accept 'public' for hosting dir
