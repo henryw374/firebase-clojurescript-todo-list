@@ -30,7 +30,7 @@
 (defn ->path [p]
   (string/join "/" (->js p)))
 
-(defn database-ref ^js [path]
+(defn database-ref [path]
   (-> (.database ^js js/firebase)
       (.ref (->path path))))
 
@@ -59,7 +59,7 @@
 (defn on-value-reaction 
   "returns a reagent atom that will always have the latest value at 'path' in the Firebase database"
   [{:keys [path] :as args}]
-  (let [ref (database-ref path)
+  (let [ref ^js (database-ref path)
         reaction (r/atom nil)
         callback (fn [^js x] (reset! reaction (some-> x (.val) ->clj)))]
     (.on ref "value" callback (success-failure-dispatch args))
