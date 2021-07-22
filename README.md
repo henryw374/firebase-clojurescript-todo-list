@@ -16,6 +16,14 @@ It also shows that [Re-Frame](https://github.com/day8/re-frame) apps don't need 
 
 ## Usage
 
+This main branch of this project uses [Shadow cljs](https://github.com/thheller/shadow-cljs) to compile Clojurescript (although is not using npm at all).
+
+There is a `figwheel` branch which uses [Figwheel](https://github.com/bhauman/figwheel-main) and is otherwise
+identical.
+
+Shadow has the 'build report' feature which shows you what code you are deploying - which is extremely
+useful for keeping your build size in check.
+
 ### Firebase setup
 
 Start by following [the Firebase docs](https://firebase.google.com/docs/web/setup) to create your own app.
@@ -89,9 +97,8 @@ and the browser REPL to inspect the data model.
 But... 
 
 * No NPM? In this app, the firebase APIs are served by Firebase servers, and the React library has been
-pre-bundled as part of a Clojurescript library. If we needed more libraries from NPM, I would probably
-switch to the [Shadow](https://shadow-cljs.github.io/docs/UsersGuide.html) build tool to compile 
-Clojurescript. That adds a little complexity, but is worth it if more is needed from NPM.
+served from a CDN. This approach doesn't scale so well if you have dependencies within JS libs, but there is
+always the option to go the npm route if needed.  
 
 * There is no Clojurescript-Firebase wrapper library required. In this repo, the namespaces `firbase.auth` and 
 `firebase.database` contain functions that call just the Firebase API functions that are needed for this app

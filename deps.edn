@@ -1,15 +1,15 @@
 {:paths ["src" "dev" "firebase"]
  :deps  {;stuff to help develop and compile cljs source
          org.clojure/clojure       {:mvn/version "1.10.2-alpha1"}
-         com.bhauman/figwheel-main {:mvn/version "0.2.11"}
-         cider/piggieback          {:mvn/version "0.4.0"}
-         nrepl/nrepl               {:mvn/version "0.6.0"}
+         thheller/shadow-cljs {:mvn/version "2.12.6"}
+         nrepl/nrepl                 {:mvn/version "0.6.0"}
+         cider/piggieback            {:mvn/version "0.4.0"}
 
          ;cljs source libraries
          cljs-bean/cljs-bean                 {:mvn/version "1.5.0"}
-         reagent/reagent                   {:mvn/version "0.8.1"}
-         re-frame/re-frame                  {:mvn/version "0.10.9"}
+         re-frame/re-frame         {:mvn/version "1.2.0"}
+         reagent/reagent           {:mvn/version "1.0.0"}
          
          ; both :)
-         org.clojure/clojurescript {:mvn/version "1.10.773"}
+         org.clojure/clojurescript {:mvn/version "1.10.844"}
          }}

@@ -1,58 +1,58 @@
 (ns compilation
-  (:require [figwheel.main.api :as figwheel]
-            [cljs.build.api :as cljs]
+  (:require [shadow.cljs.devtools.api :as api]
+            [shadow.cljs.devtools.server :as server]
+            [shadow.cljs.build-report :as build-report]
             [clojure.java.shell :as sh]))
 
-(defn stop-live-compilation []
-  (figwheel/stop-all))
+(defn restart []
+  (server/stop!)
+  (server/start!))
 
-(def debug-opts
-  {:pseudo-names true
-   :pretty-print true
-   ;:source-map   true
-   })
+(defn clean [path]
+  (sh/sh "rm" "-rf" (str "./firebase/public/" path)))
 
-(defn clean []
-  (sh/sh "rm" "-rf" "firebase/public/cljs-out")
-  (sh/sh "rm" "-rf" "prod-target")
-  )
+(defn delete-cache []
+  (sh/sh "rm" "-rf" (str "./.shadow-cljs/builds")))
+
+#_(defn devcards []
+  (api/stop-worker :app-dev)
+  (api/stop-worker :devcards)
+  (clean "devcards/js")
+  (api/watch :devcards {:verbose true}))
 
 (defn prod-build []
-  (stop-live-compilation)
-  (clean)
-  (cljs/build
-    (->
-      {:optimizations :advanced
-       :infer-externs true
-       :main          'com.widdindustries.demo-app.app
-       :process-shim  false
-       :output-dir    "prod-target"
-       :output-to     "firebase/public/cljs-out/main.js"}
-      ;(merge debug-opts)
-      )))
+  (api/stop-worker :app-dev)
+  (api/stop-worker :devcards)
+  (clean "cljs-out")
+  (api/release :app))
+
+(defn watch []
+  (api/stop-worker :app-dev)
+  (clean "cljs-out")
+  (api/watch :app-dev {:verbose false}))
 
 (defn start-live-compilation []
-  (figwheel/start {:mode :serve}
-    {:id      "dev"
-     :options {:main 'com.widdindustries.demo-app.app
-               :output-to    "firebase/public/cljs-out/main.js"
-               :output-dir   "firebase/public/cljs-out"
-               :repl-verbose false}
-     
-     :config  {:auto-testing        true
-               :open-url            false
-               :watch-dirs          ["src"]
-               :css-dirs            ["firebase/public/css"]
-               :ring-server-options {:port 9502}}}))
+  (restart)
+  (watch))
 
 (defn cljs-repl []
-  (figwheel/cljs-repl "dev"))
+  (api/repl :app-dev))
 
 (comment
-  
-  (start-live-compilation)
-  (stop-live-compilation)
+  (restart)
+
+  (watch)
+  (api/watch-set-autobuild! :app-dev false)
+  (api/watch-set-autobuild! :app-dev true)
   (cljs-repl)
-  (prod-build)
+  :cljs/quit
   
+  (prod-build)
+  (build-report/-main :app "report.html")
+
+  ;(devcards)
+  ;(api/stop-worker :devcards)
+  ;(api/repl :devcards)
+
+
   )
