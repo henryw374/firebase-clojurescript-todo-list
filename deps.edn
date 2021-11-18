@@ -1,7 +1,7 @@
-{:paths ["src" "dev" "firebase"]
+{:paths ["src" "dev" "firebase" "test"]
  :deps  {;stuff to help develop and compile cljs source
          org.clojure/clojure       {:mvn/version "1.10.2-alpha1"}
-         thheller/shadow-cljs {:mvn/version "2.12.6"}
+         thheller/shadow-cljs {:mvn/version "2.16.4"}
          nrepl/nrepl                 {:mvn/version "0.6.0"}
          cider/piggieback            {:mvn/version "0.4.0"}
 
@@ -11,5 +11,5 @@
          reagent/reagent           {:mvn/version "1.0.0"}
          
          ; both :)
-         org.clojure/clojurescript {:mvn/version "1.10.844"}
+         org.clojure/clojurescript {:mvn/version "1.10.896"}
          }}

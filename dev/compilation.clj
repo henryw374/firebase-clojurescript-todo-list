@@ -40,7 +40,10 @@
 
 (comment
   (restart)
-
+  (delete-cache)
+  (api/watch :test {:verbose false})
+  (api/stop-worker :test)
+  (api/once :npm)
   (watch)
   (api/watch-set-autobuild! :app-dev false)
   (api/watch-set-autobuild! :app-dev true)

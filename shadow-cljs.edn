@@ -23,6 +23,12 @@
                        :output-dir "firebase/public/cljs-out/js"
                        :asset-path "/cljs-out/js"
                        :modules    {:main {:entries [com.widdindustries.demo-app.app]}}}
+            :test     {:target    :browser-test
+                        :test-dir  "target/public/js/test"
+                       ;           :ns-regexp "-test$"
+                       ;:runner-ns tests.client-test-main
+                        :devtools  {:http-port          8021
+                                    :http-root          "target/public/js/test"}}
             #_:devcards #_{:target           :browser
                        :compiler-options {:devcards true :verbose true
                                           }
