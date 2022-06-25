@@ -24,7 +24,7 @@
 
 (comment
 
-  ; start compiling and watching the two apps
+  ; start compiling and watching the app
   (app-watch)
   ; visit http://localhost:9000 
   (util/repl)
@@ -35,14 +35,13 @@
   (util/run-tests)
   ; start a cljs repl session in the test build. :cljs/quit to exit
   (util/repl :browser-test-build)
-  ; run tests in headless browser
-  (util/compile-and-run-tests-headless* :release)
-
-  (util/stop-server)
 
   ; do the release
   (app-release)
 
   (util/build-report (app-config) "build-report.html")
+  
+  ; you can stop/start etc as required
+  (util/stop-server)
 
   )
