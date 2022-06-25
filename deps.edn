@@ -1,15 +1,10 @@
-{:paths ["src" "dev" "firebase" "test"]
+{:paths ["src" "dev" "web-target" "test" "firebase"]
  :deps  {;stuff to help develop and compile cljs source
-         org.clojure/clojure       {:mvn/version "1.10.2-alpha1"}
-         thheller/shadow-cljs {:mvn/version "2.16.4"}
-         nrepl/nrepl                 {:mvn/version "0.6.0"}
-         cider/piggieback            {:mvn/version "0.4.0"}
-
+         com.widdindustries/tiado-cljs2 {:git/url "https://github.com/henryw374/tiado-cljs2.git"
+                                         :git/sha "fbb631fa66bb9dcd3740678bf248bb3cd490c431"}
          ;cljs source libraries
-         cljs-bean/cljs-bean                 {:mvn/version "1.5.0"}
-         re-frame/re-frame         {:mvn/version "1.2.0"}
-         reagent/reagent           {:mvn/version "1.0.0"}
-         
-         ; both :)
-         org.clojure/clojurescript {:mvn/version "1.10.896"}
+         cljs-bean/cljs-bean            {:mvn/version "1.8.0"}
+         re-frame/re-frame              {:mvn/version "1.2.0"}
+         reagent/reagent                {:mvn/version "1.1.0"}
+
          }}

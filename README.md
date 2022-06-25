@@ -97,7 +97,7 @@ and the browser REPL to inspect the data model.
 But... 
 
 * No NPM? In this app, the firebase APIs are served by Firebase servers, and the React library has been
-served from a CDN. This approach doesn't scale so well if you have dependencies within JS libs, but there is
+served from a CDN. This approach doesn't scale so well if you have multiple dependencies within JS libs, but there is
 always the option to go the npm route if needed.  
 
 * There is no Clojurescript-Firebase wrapper library required. In this repo, the namespaces `firbase.auth` and 
